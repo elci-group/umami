@@ -1,0 +1,52 @@
+# Umami configuration
+# Install to /etc/umami/umami.toml
+
+[daemon]
+# Sampling interval for the control loop, milliseconds. Minimum 100.
+interval_ms = 1000
+
+[tiers]
+# --- Tier 1: ZRAM (compressed RAM), absorbs pressure before flash ---
+zram_size_mb = 8192
+zram_algorithm = "lz4"
+zram_priority = 200
+
+# --- Tier 2: Umami flash tier (USB 3.1+ / external NVMe) ---
+# Use a stable by-id path so re-plugs re-resolve correctly:
+#   ls -l /dev/disk/by-id/
+# Empty string = tier unmanaged.
+umami_device = ""
+umami_priority = 100
+
+# --- Tier 3: disk swap, last resort only ---
+fallback_swap = ""
+fallback_priority = 10
+
+[policy]
+# vm.swappiness per state (kernel range 0-200).
+swappiness_calm = 60
+swappiness_pressured = 120
+swappiness_critical = 180
+# Backoff while the flash tier is saturated: stop feeding it.
+swappiness_thrash_guard = 30
+# Pinned while the flash device is physically missing (USB pulled).
+watchdog_swappiness = 10
+
+# vm.vfs_cache_pressure: keep page cache longer under pressure.
+cache_pressure_calm = 100
+cache_pressure_pressured = 50
+
+# Escalation triggers (either condition suffices).
+psi_pressure_threshold = 5.0      # memory PSI "some" avg10
+psi_critical_threshold = 20.0
+mem_pressure_available_pct = 15   # MemAvailable / MemTotal
+mem_critical_available_pct = 5
+
+# Thrash guard: swap-in rate (KiB/s) + full stalls mean the flash tier
+# is the bottleneck. 51200 KiB/s = 50 MiB/s.
+thrash_swapin_kbs = 51200
+thrash_psi_full_avg10 = 5.0
+
+# Hysteresis: consecutive samples required to escalate / relax.
+enter_samples = 2
+exit_samples = 10

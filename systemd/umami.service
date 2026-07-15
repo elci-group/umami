@@ -1,0 +1,17 @@
+[Unit]
+Description=Umami memory pressure buffering daemon
+Documentation=https://github.com/umami/umami
+After=local-fs.target
+ConditionPathExists=/proc/pressure/memory
+
+[Service]
+Type=simple
+ExecStart=/usr/local/sbin/umami daemon --config /etc/umami/umami.toml
+Restart=on-failure
+RestartSec=2s
+# Runs as root: it manages swap devices and writes /proc/sys/vm tunables.
+# Note: the daemon intentionally does NOT swapoff tiers on exit — active
+# swap outlives the service so a restart never strands swapped-out pages.
+
+[Install]
+WantedBy=multi-user.target

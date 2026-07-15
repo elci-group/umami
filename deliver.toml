@@ -1,0 +1,67 @@
+[[file]]
+path = "Cargo.toml"
+required = true
+
+[[file]]
+path = "src/main.rs"
+required = true
+forbid_regex = ["TODO", "FIXME", "unimplemented!", "todo!"]
+
+[[file]]
+path = "src/procfs.rs"
+required = true
+forbid_regex = ["TODO", "FIXME", "unimplemented!", "todo!"]
+
+[[file]]
+path = "src/policy.rs"
+required = true
+forbid_regex = ["TODO", "FIXME", "unimplemented!", "todo!"]
+
+[[file]]
+path = "src/config.rs"
+required = true
+forbid_regex = ["TODO", "FIXME", "unimplemented!", "todo!"]
+
+[[file]]
+path = "src/tiers.rs"
+required = true
+forbid_regex = ["TODO", "FIXME", "unimplemented!", "todo!"]
+
+[[file]]
+path = "config/umami.toml"
+required = true
+
+[[file]]
+path = "systemd/umami.service"
+required = true
+
+[[file]]
+path = "systemd/99-umami.rules"
+required = true
+
+[[file]]
+path = "scripts/install.sh"
+required = true
+
+[[file]]
+path = "README.md"
+required = true
+
+[[command]]
+name = "cargo test"
+cmd = ["cargo", "test"]
+expect_exit = 0
+timeout_secs = 180
+stdout_contains = ["test result: ok"]
+
+[[command]]
+name = "cargo build --release"
+cmd = ["cargo", "build", "--release"]
+expect_exit = 0
+timeout_secs = 180
+
+[[command]]
+name = "cargo clippy"
+cmd = ["cargo", "clippy", "--all-targets"]
+expect_exit = 0
+timeout_secs = 180

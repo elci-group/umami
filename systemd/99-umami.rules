@@ -1,0 +1,4 @@
+# Optional: (re)start umami when a swap-formatted block device appears,
+# e.g. when the USB flash tier is plugged in after boot.
+# Install to /etc/udev/rules.d/99-umami.rules
+ACTION=="add", SUBSYSTEM=="block", ENV{ID_FS_TYPE}=="swap", TAG+="systemd", ENV{SYSTEMD_WANTS}="umami.service"
