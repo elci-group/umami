@@ -1,7 +1,6 @@
 # Umami
 
-A multi-tier memory pressure buffering system for Linux. It virtualises
-**capacity — not speed** — by absorbing memory pressure into managed,
+A multi-tier memory pressure buffering system for Linux. It virtualises**capacity — not speed** — by absorbing memory pressure into managed,
 flash-backed swap tiers before kernel collapse (thrash → freeze → OOM)
 ever occurs.
 
@@ -125,8 +124,15 @@ Zero external dependencies; Rust 2024 edition, stdlib only.
 
 ```sh
 cargo build
-cargo test    # parsers, swap-rate math, full policy state machine
+cargo test    # parsers, swap-rate math, full policy state machine, CLI
 ```
+
+### Analysis reports
+
+- [amber dependency analysis](analysis/amber_report.md) — zero third-party
+  dependencies by design; nothing to reduce.
+- [fract architectural analysis](analysis/fract_report.md) — all modules
+  healthy, worst entropy 0.64 (threshold 0.65).
 
 Layout:
 
