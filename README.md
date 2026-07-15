@@ -1,6 +1,7 @@
 # Umami
 
-A multi-tier memory pressure buffering system for Linux. It virtualises**capacity — not speed** — by absorbing memory pressure into managed,
+A multi-tier memory pressure buffering system for Linux. It virtualises
+**capacity — not speed** — by absorbing memory pressure into managed,
 flash-backed swap tiers before kernel collapse (thrash → freeze → OOM)
 ever occurs.
 
@@ -141,3 +142,7 @@ Layout:
 - `src/tiers.rs` — actuators: sysctl, swapon/swapoff, ZRAM lifecycle
 - `src/config.rs` — minimal TOML-subset config parser
 - `src/main.rs` — daemon loop, watchdog, CLI
+
+## License
+
+MIT — see [LICENSE](LICENSE).
